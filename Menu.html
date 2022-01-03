@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+</head>
+<style>
+    body{
+        background-color: rgb(106, 106, 146);
+    }
+    nav{
+        width: auto;
+        height: 40px;
+        background-color: rgb(54, 54, 65);
+        display: flex;
+    }
+    .navbar{
+        font-size: 2em;
+        text-decoration: none;
+        color: rgb(189, 189, 192);
+        margin: 0 10px 0 10px;
+        font-style: oblique;
+    }
+   .heading{
+       text-align: center;
+       font-style: italic;
+       color: cornsilk;
+       font-size: 60px;
+   }
+   #menuCard{
+       display: grid;
+       grid-template-columns: auto auto auto ;
+   }
+   img{
+       width: 300px;
+       height: 200px;
+   }
+
+</style>
+<body>
+    <nav>
+        <div><a href="#" class="navbar">Sign Up</a></div>
+        <div><a href="#" class="navbar">Log In</a></div>
+        <div><a href="Menu.html" class="navbar" >Menu</a></div>
+    </nav>
+    <div class="heading">Menu</div>
+    <div>
+        <input type="text" id="search"  placeholder="order your food">
+        <button onclick="food() " id="searchBtn">Search</button>
+    </div>
+    <div id="menuCard"></div>
+</body>
+</html>
+
+<script>
+    function food(){
+        let url= "www.themealdb.com/api/json/v1/1/search.php?f=a";
+        var name = document.getElementById("search").value;
+        let menu = document.getElementById("menuCard");
+
+        async function getFood(){
+            const response = await fetch(url);
+            const dish = await response.json();
+
+            console.log("Dish:",dish);
+            appendFood(dish.meals);
+        }
+        
+        function appendFood(Food){
+            Food.forEach(function (Foods) {
+                let main = document.createElement("div");
+                let img = document.createElement("img");
+                img.src = Foods.strMealThumb;
+                let title = document.createElement("h3");
+
+                title.textContent = Foods.strMeal;
+                let btn  = document.createElement("button");
+                btn.textContent="Add to cart";
+                btn.addEventListener("click,myFun")
+
+                function myFun() {
+                    window.location="cart.html";
+                }
+                main.append(img.title,btn);
+                card.append(main);
+
+            });
+
+            getFood();
+        }
+
+    }
+
+</script>
